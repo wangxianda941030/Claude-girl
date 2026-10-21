@@ -1,0 +1,8 @@
+# 把 claude-girl-settings 挂进 DSH 的配置树。
+#
+# id 必须等于包名，DSH STORE 上架时按它比对；这一行不能写行尾注释，
+# 商城预检是拿正则抓该行的值并要求其后直接换行。
+
+- insert:
+    - id: claude-girl-settings
+      name: 'claude-girl-settings'

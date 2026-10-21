@@ -61,6 +61,7 @@ Windows 用户也可以直接双击 `install.bat`。改动 Claude 的配置文�
 
 - **动作分组和台词**：`pet-config.json`（Claude 版）和 `dsh-pet-pack/claude-config.json`（DSH 版）。改完右键「重载配置」，不用重启。
 - **本机接口**：`127.0.0.1:47321`，只接受本机访问：`/ping`、`/play?clip=C01`、`/say?text=你好`、`/state?s=thinking`、`/balance`、`POST /hook`。
+- **在 DSH 设置页里调她**（实验性）：[`dsh-plugin/`](dsh-plugin/) 是一个小插件，装完 DSH 设置里会多一行「克劳德大小姐」，能图形化改大小、位置、显示方式和三个开关，不用手改 JSON。装法见 [dsh-plugin/README.md](dsh-plugin/README.md)。
 
 ## 一起来加表情和动作 🙌
 

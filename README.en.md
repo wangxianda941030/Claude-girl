@@ -62,6 +62,7 @@ Afterwards, reopen Claude Code. For the Claude desktop app, fully quit it (tray 
 
 - **Action groups and lines:** `pet-config.json` (Claude version) and `dsh-pet-pack/claude-config.json` (DSH version). Right-click → reload config; no restart needed.
 - **Local API:** `127.0.0.1:47321`, localhost only. Endpoints: `/ping`, `/play?clip=C01`, `/say?text=hi`, `/state?s=thinking`, `/balance`, `POST /hook`.
+- **Tweak her from the DSH settings page** (experimental): [`dsh-plugin/`](dsh-plugin/) is a small plugin that adds a "克劳德大小姐" section to DSH's settings, so size, position, display mode and the three toggles can be edited without touching JSON. See [dsh-plugin/README.md](dsh-plugin/README.md).
 
 ## Help add stickers and actions 🙌
 
