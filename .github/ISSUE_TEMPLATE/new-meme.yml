@@ -1,0 +1,45 @@
+name: 投稿新表情包
+description: 给克劳德大小姐投稿一张表情包 / 梗图
+title: "[新表情包] "
+labels: ["表情包投稿"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        谢谢投稿！规范见 [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md#表情包规范)。
+        简单说：正方形、半身大头、粗描边、橘色漫画符号、手写大字，梗要跟 Claude 或写代码有关，不擦边。
+
+  - type: textarea
+    id: image
+    attributes:
+      label: 图片
+      description: 直接把 PNG/JPG 拖进来
+      placeholder: 拖图片到这里
+    validations:
+      required: true
+
+  - type: input
+    id: caption
+    attributes:
+      label: 配字
+      description: 图上写的那句大字
+      placeholder: 你说得完全正确
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 画面 + 适用场合
+      description: DSH 版会按这段描述挑图，所以写清楚她什么表情、什么姿势、什么时候该用
+      placeholder: 她双手捧脸星星眼。适合用户夸她、或者她说得对的时候。
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: license
+    attributes:
+      label: 授权
+      options:
+        - label: 我确认这张图是我自己做的，同意按仓库的 CC BY-NC 4.0 协议放进本项目（可转载、可二创、不可商用）
+          required: true

@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 安装 / 使用出问题了
+    url: https://github.com/wangxianda941030/Claude-girl/blob/main/AGENTS.md
+    about: 把 AGENTS.md 丢给 Claude Code 或 DSH，让它照着装一遍，比手把手快

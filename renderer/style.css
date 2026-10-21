@@ -1,0 +1,84 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  font-family: "Microsoft YaHei UI", "PingFang SC", system-ui, sans-serif;
+}
+
+#stage {
+  position: fixed;
+  inset: 0;
+}
+
+.pet-layer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 64px;
+  transform-origin: 50% 100%;
+}
+
+.pet-clip {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+  pointer-events: none;
+}
+
+.pet-clip.on {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pet-clip { transition: none; }
+}
+
+.pet-bubble {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  width: max-content;
+  max-width: min(260px, 92vw);
+  padding: 6px 12px;
+  border-radius: 14px;
+  background: #faf9f5;
+  color: #141413;
+  border: 1.5px solid #c96442;
+  font-size: 14px;
+  line-height: 1.4;
+  white-space: pre-line;
+  text-align: center;
+  word-break: break-word;
+  opacity: 0;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  pointer-events: none;
+  box-shadow: 0 2px 6px rgba(20, 20, 19, 0.12);
+}
+
+.pet-bubble::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -7px;
+  width: 10px;
+  height: 10px;
+  background: #faf9f5;
+  border-right: 1.5px solid #c96442;
+  border-bottom: 1.5px solid #c96442;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.pet-bubble.on {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}

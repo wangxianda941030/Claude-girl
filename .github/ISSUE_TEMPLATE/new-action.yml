@@ -1,0 +1,54 @@
+name: 投稿新动作
+description: 给克劳德大小姐投稿一段新动作（绿幕视频或网盘链接）
+title: "[新动作] "
+labels: ["动作投稿"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        谢谢投稿！动作规范见 [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md#动作规范)。
+        简单说：16:9、720P、固定镜头、纯绿幕 `#00FF00`、24fps、5 或 10 秒、画面无文字、首尾帧都回到站姿。
+
+  - type: input
+    id: name
+    attributes:
+      label: 动作名
+      description: 中文短名，会出现在右键菜单里，比如「转圈圈」
+      placeholder: 转圈圈
+    validations:
+      required: true
+
+  - type: textarea
+    id: video
+    attributes:
+      label: 视频
+      description: 可以直接把 mp4/webm 拖进来，文件太大就贴网盘链接（记得设成任何人可下载）
+      placeholder: 拖视频到这里，或贴网盘链接
+    validations:
+      required: true
+
+  - type: input
+    id: code
+    attributes:
+      label: 动作代号（可留空）
+      description: 如果懂代码，可以指定一个没被占用的代号，比如 E01；不懂就留空，我们分配
+      placeholder: E01
+    validations:
+      required: false
+
+  - type: textarea
+    id: usage
+    attributes:
+      label: 适合什么时候播？
+      description: 比如「查余额时」「点她的时候」「Claude 出错时」，会决定放进哪个分组
+      placeholder: 点她的时候，配合一句「干嘛呀～」
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: license
+    attributes:
+      label: 授权
+      options:
+        - label: 我确认这段视频是我自己做的，同意按仓库的 CC BY-NC 4.0 协议放进本项目（可转载、可二创、不可商用）
+          required: true

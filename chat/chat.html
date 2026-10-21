@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'">
+  <link rel="stylesheet" href="chat.css">
+  <title>和克劳德大小姐聊天</title>
+</head>
+<body>
+  <header>
+    <span class="title">克劳德大小姐</span>
+    <button id="clearBtn" class="ghost" type="button">清空</button>
+    <button id="setBtn" class="ghost" type="button">设置</button>
+  </header>
+
+  <section id="settings" hidden>
+    <label for="provider">接口</label>
+    <select id="provider">
+      <option value="anthropic">Claude 官方接口</option>
+      <option value="openai">OpenAI 兼容接口（中转站、DeepSeek 等）</option>
+    </select>
+    <label for="baseUrl">接口地址 <small>官方接口可以不填</small></label>
+    <input id="baseUrl" type="text" placeholder="https://api.anthropic.com" spellcheck="false">
+    <label for="apiKey">API Key <small>只保存在这台电脑上</small></label>
+    <input id="apiKey" type="password" spellcheck="false" autocomplete="off">
+    <label for="model">模型</label>
+    <input id="model" type="text" spellcheck="false">
+    <label for="balanceSource" class="sep">右键「查看余量 / 余额」查的是</label>
+    <select id="balanceSource">
+      <option value="claude">Claude 订阅余量（自动读 Claude Code 的登录，不用填）</option>
+      <option value="deepseek">DeepSeek 账户余额</option>
+    </select>
+    <label for="deepseekKey" id="dsLabel">DeepSeek API Key <small>上面接口用的就是 DeepSeek 可以不填</small></label>
+    <input id="deepseekKey" type="password" spellcheck="false" autocomplete="off">
+    <div class="row">
+      <button id="saveBtn" type="button">保存</button>
+      <span id="saved" class="hint"></span>
+    </div>
+  </section>
+
+  <main id="list" aria-live="polite"></main>
+
+  <form id="form">
+    <textarea id="input" rows="2" placeholder="和她说点什么…（Enter 发送，Shift+Enter 换行）"></textarea>
+    <button id="sendBtn" type="submit">发送</button>
+  </form>
+  <script src="chat.js"></script>
+</body>
+</html>

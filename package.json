@@ -1,0 +1,25 @@
+{
+  "name": "claude-girl",
+  "productName": "克劳德大小姐桌宠",
+  "version": "0.3.0",
+  "description": "克劳德大小姐 / Claude-girl：跟着 Claude 一起干活的桌宠 · a desktop pet that works along with Claude",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "install-all": "node install.js",
+    "uninstall-all": "node install.js --uninstall",
+    "setup-hooks": "node scripts/setup-hooks.js",
+    "remove-hooks": "node scripts/setup-hooks.js --remove",
+    "setup-claude-desktop": "node scripts/setup-claude-desktop.js",
+    "remove-claude-desktop": "node scripts/setup-claude-desktop.js --remove"
+  },
+  "devDependencies": {
+    "electron": "33.2.1"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wangxianda941030/Claude-girl.git"
+  }
+}
