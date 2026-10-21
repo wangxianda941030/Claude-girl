@@ -6,6 +6,7 @@
 //   node install.js --claude-code   只接 Claude Code（hook） / Claude Code hooks only
 //   node install.js --claude-desktop  只接 Claude 桌面端（MCP） / Claude desktop app (MCP) only
 //   node install.js --dsh           只装进 DeepSeek Harness 的 dsh-pet / DSH pet pack only
+//   node install.js --with-dsh-pet  DSH 里没有 dsh-pet 时顺手装上 / also install the dsh-pet plugin
 //   node install.js --no-start      装完不启动 / don't launch afterwards
 //   node install.js --cn            用国内镜像下载 Electron / use China mirrors for Electron
 //   node install.js --uninstall     全部卸载 / remove everything
@@ -96,6 +97,57 @@ function copyDir(src, dst) {
     else fs.copyFileSync(s, d);
   }
 }
+/**
+ * DSH 里的「宠物包」只是配置 + 素材，真正把她画出来的是 dsh-pet 插件。
+ * 没装 dsh-pet 时把文件拷进去什么也不会发生（`$DSH_HOME/dsh-pet/` 这个目录本身也可能是我们建的，
+ * 所以它的存在不能当作 dsh-pet 已装的证据）。必须查 profile 的依赖 / bundles。
+ */
+function dshPetInstalled() {
+  const profiles = path.join(DSH_HOME, 'profiles');
+  if (!fs.existsSync(profiles)) return false;
+  for (const name of fs.readdirSync(profiles)) {
+    const dir = path.join(profiles, name);
+    if (fs.existsSync(path.join(dir, 'node_modules', 'dsh-pet', 'package.json'))) return true;
+    const pkgPath = path.join(dir, 'package.json');
+    if (!fs.existsSync(pkgPath)) continue;
+    try {
+      const j = JSON.parse(fs.readFileSync(pkgPath, 'utf8').replace(/^\uFEFF/, ''));
+      const deps = { ...(j.dependencies || {}), ...(j.devDependencies || {}), ...(j.optionalDependencies || {}) };
+      const bundles = (j.dsh && j.dsh.profile && j.dsh.profile.bundles) || [];
+      if (deps['dsh-pet'] || bundles.includes('dsh-pet')) return true;
+    } catch (e) {
+      /* 坏掉的 package.json 跳过，继续看下一个 profile */
+    }
+  }
+  return false;
+}
+
+/** 找 dsh 命令行（PATH 里的，或者桌面应用自带的那个）。找不到返回 null。 */
+function findDshCli() {
+  const probe = (cmd) => {
+    const r = spawnSync(cmd, ['--version'], { stdio: 'ignore', shell: WIN });
+    return r.status === 0 ? cmd : null;
+  };
+  if (probe(WIN ? 'dsh.cmd' : 'dsh')) return WIN ? 'dsh.cmd' : 'dsh';
+  const candidates = [];
+  if (process.env.LOCALAPPDATA) {
+    candidates.push(path.join(process.env.LOCALAPPDATA, 'Programs', 'DeepSeek Harness', 'resources', 'runtime', 'cli', 'bin', WIN ? 'dsh.cmd' : 'dsh'));
+  }
+  if (process.env.ProgramFiles) {
+    candidates.push(path.join(process.env.ProgramFiles, 'DeepSeek Harness', 'resources', 'runtime', 'cli', 'bin', WIN ? 'dsh.cmd' : 'dsh'));
+  }
+  candidates.push('/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh');
+  return candidates.find((p) => fs.existsSync(p)) || null;
+}
+
+/** DSH 里实际用的 profile：有 desktop 就用 desktop，否则 web。 */
+function dshProfileName() {
+  const profiles = path.join(DSH_HOME, 'profiles');
+  if (fs.existsSync(path.join(profiles, 'desktop'))) return 'desktop';
+  if (fs.existsSync(path.join(profiles, 'web'))) return 'web';
+  return 'desktop';
+}
+
 function dshInstall() {
   const petDir = path.join(DSH_HOME, 'dsh-pet', 'pet');
   if (uninstall) {
@@ -104,13 +156,49 @@ function dshInstall() {
     }
     return ok('已从 DSH 移除', 'Removed from DSH');
   }
+
   const src = path.join(ROOT, 'dsh-pet-pack');
   fs.mkdirSync(petDir, { recursive: true });
   fs.copyFileSync(path.join(src, 'claude-config.json'), path.join(petDir, 'claude-config.json'));
   copyDir(path.join(src, 'claude-animation'), path.join(petDir, 'claude-animation'));
   copyDir(path.join(src, 'claude-memes'), path.join(petDir, 'claude-memes'));
-  ok('已装进 DSH：' + petDir + '\n    在 DSH 里右键宠物「重载配置」或重启 DSH 生效（需要先装 dsh-pet 插件）',
-     'Installed into DSH: ' + petDir + '\n    Right-click the pet in DSH → reload config, or restart DSH (the dsh-pet plugin must be installed)');
+  ok('宠物包已就位：' + petDir, 'Pet pack files copied to: ' + petDir);
+
+  // 关键一步：没有 dsh-pet 的话，拷进去的只是一堆没人读的文件
+  if (dshPetInstalled()) {
+    ok('dsh-pet 已经在 DSH 里了，重启 DSH 或右键「重载配置」就能看到她',
+       'dsh-pet is installed — restart DSH or right-click → reload config to see her');
+    return;
+  }
+
+  const profile = dshProfileName();
+  const addCmd = 'dsh plugin --profile ' + profile + ' add dsh-pet';
+
+  if (args.has('--with-dsh-pet')) {
+    const cli = findDshCli();
+    if (!cli) {
+      fail('没找到 dsh 命令行，装不了 dsh-pet。请手动运行：' + addCmd,
+           'Could not find the dsh CLI. Run manually: ' + addCmd);
+      return;
+    }
+    say('  … 正在用 ' + cli + ' 安装 dsh-pet（要联网）', '  … Installing dsh-pet via ' + cli + ' (needs network)');
+    const r = spawnSync(cli, ['plugin', '--profile', profile, 'add', 'dsh-pet'], { stdio: 'inherit', shell: WIN });
+    if (r.status === 0 && dshPetInstalled()) {
+      ok('dsh-pet 装好了。完全退出 DSH 再打开，然后右键「重载配置」',
+         'dsh-pet installed. Fully quit and reopen DSH, then reload the config');
+    } else {
+      fail('自动安装没成功，请手动运行：' + addCmd, 'Auto-install failed. Run manually: ' + addCmd);
+    }
+    return;
+  }
+
+  // 没加 --with-dsh-pet：说清楚还差一步，别让人以为已经装完了
+  fail('还差一步：DSH 里要先有 dsh-pet 插件，她才会出现（现在只是把她的文件放好了）',
+       'One more step: the dsh-pet plugin must be installed in DSH, otherwise nothing will show up');
+  say('    在终端里运行：' + addCmd + '，然后完全退出 DSH 再打开。',
+      '    Run: ' + addCmd + ' then fully quit and reopen DSH.');
+  say('    下次可以加 --with-dsh-pet 让安装脚本自己装。',
+      '    Or re-run this installer with --with-dsh-pet to let it do that.');
 }
 
 // ---------- 主流程 / main ----------

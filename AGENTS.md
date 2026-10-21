@@ -25,6 +25,7 @@ node install.js
 ```
 
 - It auto-detects Claude Code (`~/.claude`), the Claude desktop app and DeepSeek Harness (`~/.dsh`), and sets up each one it finds.
+- **DSH needs the `dsh-pet` plugin first.** The pet pack is only config + assets; dsh-pet is what draws her. Pass `--with-dsh-pet` and the installer runs `dsh plugin --profile <profile> add dsh-pet` itself; if that fails, run it by hand and tell the user. Without dsh-pet the files land in `~/.dsh/dsh-pet/pet/` and nothing appears.
 - Add `--cn` if the user is in mainland China or the Electron download fails.
 - If the user only wants one integration, pass `--claude-code`, `--claude-desktop` or `--dsh`.
 - If you are running inside a sandbox or remote machine that is not the user's desktop, stop and tell the user. The pet must run on their own computer.

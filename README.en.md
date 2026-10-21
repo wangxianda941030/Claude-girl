@@ -50,7 +50,7 @@ node install.js
 | --- | --- |
 | **Claude Code** | Adds hooks so she follows Claude Code's state, and pops up automatically when you open Claude Code |
 | **Claude desktop app** | Adds an MCP server. Say "make the desktop pet drink some tea" in chat and she will |
-| **DeepSeek Harness** | Installs her as an extra pet for [dsh-pet](https://github.com/PC2005-cloud/dsh-pet). Right-click the pet in DSH → reload config |
+| **DeepSeek Harness** | Installs her as an extra pet for [dsh-pet](https://github.com/PC2005-cloud/dsh-pet). Right-click the pet in DSH → reload config (**dsh-pet must be installed first**; `node install.js --dsh --with-dsh-pet` installs it for you) |
 
 To install just one of these, pass `--claude-code`, `--claude-desktop` or `--dsh`. Add `--cn` to download Electron from China mirrors. To remove everything, run `node install.js --uninstall`.
 

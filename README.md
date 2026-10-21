@@ -45,7 +45,7 @@ node install.js
 | --- | --- |
 | **Claude Code** | 加 hook：跟着 Claude Code 的状态做动作；打开 Claude Code 时她不在就自动叫出来 |
 | **Claude 桌面端** | 加 MCP 插件：在聊天里说「让桌宠喝口茶」「让她查下余量」她就会动 |
-| **DeepSeek Harness** | 作为 [dsh-pet](https://github.com/PC2005-cloud/dsh-pet) 的额外宠物装进去，DSH 里右键「重载配置」就出现 |
+| **DeepSeek Harness** | 作为 [dsh-pet](https://github.com/PC2005-cloud/dsh-pet) 的额外宠物装进去，DSH 里右键「重载配置」就出现（**要先装 dsh-pet**；`node install.js --dsh --with-dsh-pet` 会顺手帮你装） |
 
 只想装其中一个就加参数：`--claude-code`、`--claude-desktop`、`--dsh`。国内网络加 `--cn` 用镜像下载 Electron。卸载：`node install.js --uninstall`。
 
