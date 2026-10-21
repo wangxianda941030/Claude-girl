@@ -7,6 +7,7 @@
   "private": true,
   "scripts": {
     "start": "electron .",
+    "check": "node scripts/check.js",
     "install-all": "node install.js",
     "uninstall-all": "node install.js --uninstall",
     "setup-hooks": "node scripts/setup-hooks.js",

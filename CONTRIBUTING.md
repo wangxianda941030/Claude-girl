@@ -35,7 +35,7 @@
 2. 在 `renderer/pet.js` 的 `CLIPS` 里加一行：`E01: { pose: 'hand', say: '一句台词' },`。
 3. 在 `pet-config.json` 的 `names` 里加名字，再放进某个分组（小动作、余额档位、工作状态…）。
 4. 在 `dsh-pet-pack/claude-config.json` 里也放进一个分组。**每个动作在 DSH 里只放一个分组**，不然右键菜单会重复。
-5. `npm start` 看看效果，然后发 PR。
+5. 跑 `node scripts/check.js`（或 `npm run check`），它会检查动作名、视频文件和分组有没有对上；再 `npm start` 看看效果，然后发 PR。
 
 ---
 
@@ -74,4 +74,4 @@ Needs `ffmpeg` (with libvpx-vp9) and Python 3.9+ (`pip install numpy pillow scip
 2. Add `E01: { pose: 'hand', say: '…' },` to `CLIPS` in `renderer/pet.js`.
 3. Add it to `names` and a group in `pet-config.json`.
 4. Add it to a group in `dsh-pet-pack/claude-config.json`. **Put each action in only one DSH group**, or the right-click menu shows it twice.
-5. Run `npm start`, then send a PR.
+5. Run `node scripts/check.js` (`npm run check`) to catch missing names, files and groups, then `npm start`, then send a PR.
