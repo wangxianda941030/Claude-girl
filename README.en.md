@@ -54,6 +54,23 @@ node install.js
 
 To install just one of these, pass `--claude-code`, `--claude-desktop` or `--dsh`. Add `--cn` to download Electron from China mirrors. To remove everything, run `node install.js --uninstall`.
 
+### Into DeepSeek Harness? Install dsh-pet first
+
+In DSH she is only a **pet pack** (config + assets). The thing that actually draws her and handles dragging and animations is the [dsh-pet](https://github.com/PC2005-cloud/dsh-pet) plugin. **Without dsh-pet in DSH, nothing will show up** no matter what you copy.
+
+```bash
+# one command, installs dsh-pet too (recommended)
+node install.js --dsh --with-dsh-pet
+
+# or install dsh-pet yourself first, then her
+dsh plugin --profile desktop add dsh-pet
+node install.js --dsh
+```
+
+Then **fully quit DSH** (tray icon → Quit, not just closing the window) and reopen it, then right-click the pet → reload config.
+
+To check whether dsh-pet is installed, look for `dsh-pet` in `dsh.profile.bundles` inside `~/.dsh/profiles/desktop/package.json`. **The `~/.dsh/dsh-pet/` folder proves nothing** — this installer creates it, and it stays empty when dsh-pet is missing.
+
 On Windows you can also double-click `install.bat`. Claude config files are backed up to `.bak` before the first change.
 
 Afterwards, reopen Claude Code. For the Claude desktop app, fully quit it (tray icon → Quit) and open it again.

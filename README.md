@@ -49,6 +49,23 @@ node install.js
 
 只想装其中一个就加参数：`--claude-code`、`--claude-desktop`、`--dsh`。国内网络加 `--cn` 用镜像下载 Electron。卸载：`node install.js --uninstall`。
 
+### 装进 DeepSeek Harness？要先装 dsh-pet
+
+DSH 里的她只是一份**宠物包**（配置 + 素材）。真正把她画出来、管拖拽和动作的是 [dsh-pet](https://github.com/PC2005-cloud/dsh-pet) 插件。**DSH 里没有 dsh-pet，文件拷进去什么都不会出现。**
+
+```bash
+# 一条命令连 dsh-pet 一起装（推荐）
+node install.js --dsh --with-dsh-pet
+
+# 或者先自己装 dsh-pet，再装她
+dsh plugin --profile desktop add dsh-pet
+node install.js --dsh
+```
+
+装完**完全退出 DSH**（托盘图标右键 → 退出，不是关窗口）再打开，然后右键宠物 →「重载配置」。
+
+怎么确认 dsh-pet 装没装：看 `~/.dsh/profiles/desktop/package.json` 的 `dsh.profile.bundles` 里有没有 `dsh-pet`。**只看 `~/.dsh/dsh-pet/` 这个目录没有用**——那目录是装她的时候建的，没装 dsh-pet 时它也是空的。
+
 Windows 用户也可以直接双击 `install.bat`。改动 Claude 的配置文件前都会先备份成 `.bak`。
 
 装完以后：Claude Code 重开一次；Claude 桌面端要完全退出（托盘图标右键退出）再打开。
