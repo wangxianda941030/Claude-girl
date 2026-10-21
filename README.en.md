@@ -69,6 +69,14 @@ She has 25 animations and 9 stickers so far, and we want more. New stickers, act
 
 You don't have to write code: open an [issue](../../issues/new/choose) with your image or video and we'll wire it in.
 
+## Want to help maintain it?
+
+- **Just contribute:** open an [issue](../../issues/new/choose); no git and no code needed. New actions, stickers, lines and English translations are all welcome.
+- **Want write access:** say so in an issue with your GitHub username and we'll add you as a collaborator, so you can push and merge PRs yourself.
+- **Just chat:** use [Discussions](../../discussions) — it's more casual than issues and fine for install questions or new-joke ideas.
+
+Every PR runs a [static check](../../actions/workflows/check.yml) (action names match the video files, nothing missing from the groups) before it can be merged.
+
 ## Credits
 
 - **Inspiration and the DSH version:** [PC2005-cloud/dsh-pet](https://github.com/PC2005-cloud/dsh-pet) (the big blue fish). We learned a lot from it:

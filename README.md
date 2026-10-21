@@ -68,6 +68,14 @@ Windows 用户也可以直接双击 `install.bat`。改动 Claude 的配置文�
 
 不想写代码也行：开一个 [Issue](../../issues/new/choose) 把图或视频丢上来，我们帮你接进去。
 
+## 想一起维护？
+
+- **只投稿**：开 [Issue](../../issues/new/choose) 就行，不用会 git、不用碰代码。新动作、新表情包、新台词、英文翻译都收。
+- **想直接改这个仓库**：在 Issue 里说一声你的 GitHub 用户名，我们把你加成协作者，之后就能自己 push、自己合并别人的 PR。
+- **随便聊聊**：去 [Discussions](../../discussions) 开帖，比 Issue 随意，问怎么装、想个新梗都可以。
+
+每一次 PR 都会自动跑 [静态检查](../../actions/workflows/check.yml)（动作名和视频文件对不对得上、有没有漏进分组），过了才合。
+
 ## 致谢
 
 - **灵感和 DSH 版**：[PC2005-cloud/dsh-pet](https://github.com/PC2005-cloud/dsh-pet)（蓝色大肥鱼）。菜单结构、动作分组和事件档位的设计，DSH 版的宠物包格式，以及按色相抠绿幕的方法，都是跟它学的。DSH 版直接跑在 dsh-pet 里。
